@@ -1,0 +1,111 @@
+/* Retrofit Copilot — crystal-water theme. MUI owns components (see theme.ts); this file owns the
+   ambient background and the few layout helpers shared across pages. */
+:root {
+  --deep: #04131f;
+  --fg: #e6f8ff;
+  --muted: rgba(198, 233, 245, 0.68);
+  --line: rgba(191, 244, 255, 0.12);
+  --aqua: #5ce1e6;
+  --lagoon: #3b9cff;
+  --ok: #5eeaa8;
+  --warn: #ffc46b;
+  --err: #ff7f8f;
+  --info: #8fb8ff;
+  --mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(1200px 700px at 85% -10%, rgba(59, 156, 255, 0.22), transparent 60%),
+    radial-gradient(900px 600px at -10% 20%, rgba(92, 225, 230, 0.16), transparent 60%),
+    linear-gradient(180deg, #062235 0%, #04131f 55%, #020b13 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+::selection { background: rgba(92, 225, 230, 0.35); }
+
+/* ---- ambient water ---- */
+.ocean { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.pool { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.55; }
+.p1 { width: 46vw; height: 46vw; left: -12vw; top: 30vh; background: radial-gradient(circle, rgba(92, 225, 230, 0.35), transparent 65%); }
+.p2 { width: 38vw; height: 38vw; right: -8vw; top: -6vh; background: radial-gradient(circle, rgba(59, 156, 255, 0.4), transparent 65%); }
+.p3 { width: 30vw; height: 30vw; right: 18vw; bottom: -14vh; background: radial-gradient(circle, rgba(140, 255, 230, 0.22), transparent 65%); }
+.caustics {
+  position: absolute; inset: -20%;
+  background:
+    repeating-radial-gradient(circle at 30% 40%, transparent 0 38px, rgba(170, 245, 255, 0.035) 40px 42px, transparent 44px 90px),
+    repeating-radial-gradient(circle at 70% 65%, transparent 0 52px, rgba(120, 210, 255, 0.03) 54px 56px, transparent 58px 120px);
+  mix-blend-mode: screen;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .p1 { animation: drift1 26s ease-in-out infinite alternate; }
+  .p2 { animation: drift2 32s ease-in-out infinite alternate; }
+  .p3 { animation: drift1 38s ease-in-out infinite alternate-reverse; }
+  .caustics { animation: shimmer 40s linear infinite; }
+  .rise { animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+}
+@keyframes drift1 { to { transform: translate(8vw, -6vh) scale(1.12); } }
+@keyframes drift2 { to { transform: translate(-6vw, 8vh) scale(0.92); } }
+@keyframes shimmer { to { transform: translate(4%, 3%) rotate(6deg); } }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---- layout ---- */
+.shell { max-width: 1240px; margin: 0 auto; padding: 32px max(16px, env(safe-area-inset-left)) 80px; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; align-items: start; }
+@media (max-width: 960px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+.fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 560px) { .fields { grid-template-columns: minmax(0, 1fr); } }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.mono { font-family: var(--mono); font-size: 12px; }
+.muted { color: var(--muted); }
+.gradient-text {
+  background: linear-gradient(100deg, #e6f8ff 0%, #a5f6ff 35%, var(--aqua) 60%, var(--lagoon) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* drop zone */
+.drop {
+  border: 1.5px dashed rgba(191, 244, 255, 0.22); border-radius: 16px; padding: 22px 16px; text-align: center;
+  background: rgba(3, 18, 28, 0.35); transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.drop.over { border-color: var(--aqua); background: rgba(92, 225, 230, 0.08); box-shadow: 0 0 40px -10px rgba(92, 225, 230, 0.6) inset; }
+
+/* evidence quote under a field */
+.quote { font-family: var(--mono); font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; margin-top: 4px; }
+
+/* issue list */
+.issues { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.issues li { display: grid; grid-template-columns: 8px minmax(0, 1fr); gap: 10px; font-size: 13px; align-items: start; }
+.issues li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; background: var(--muted); }
+.issues li.warning::before { background: var(--warn); box-shadow: 0 0 10px var(--warn); }
+.issues li.error::before { background: var(--err); box-shadow: 0 0 10px var(--err); }
+.issues li.info::before { background: var(--info); box-shadow: 0 0 10px var(--info); }
+
+/* energy class scale: cool water to warm */
+.energy-scale { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; }
+.energy-scale div {
+  text-align: center; font-family: var(--mono); font-size: 12px; padding: 7px 0; border-radius: 8px; color: rgba(230, 248, 255, 0.55);
+  background: rgba(191, 244, 255, 0.05); border: 1px solid transparent; transition: all 0.3s;
+}
+.energy-scale div.before { border-color: var(--err); color: var(--fg); background: rgba(255, 127, 143, 0.12); box-shadow: 0 0 18px -4px var(--err); }
+.energy-scale div.after { border-color: var(--ok); color: var(--fg); background: rgba(94, 234, 168, 0.14); box-shadow: 0 0 18px -4px var(--ok); }
+
+/* trace timeline */
+.timeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.timeline li { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 13px; align-items: baseline; }
+.timeline .kind { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.timeline .kind.llm { color: var(--aqua); }
+.timeline .kind.guardrail { color: var(--info); }
+.timeline .kind.fallback { color: var(--warn); }
+.timeline .kind.retrieval, .timeline .kind.tool { color: var(--ok); }
+.timeline .meta { font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: right; white-space: nowrap; }
+
+/* citations */
+.cite { border-left: 2px solid var(--aqua); padding: 2px 0 2px 12px; display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
+.cite .id { font-family: var(--mono); font-size: 11.5px; color: var(--aqua); }
+.cite a { color: var(--fg); text-decoration-color: rgba(92, 225, 230, 0.5); }
+
+.answer { white-space: pre-wrap; max-width: 75ch; }
+tr.clickable { cursor: pointer; }
+tr.clickable:hover td { background: rgba(92, 225, 230, 0.05); }

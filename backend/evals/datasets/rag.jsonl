@@ -1,0 +1,14 @@
+{"id": "q1", "question": "What is the base grant rate for facade insulation?", "expected_docs": ["beg-em-envelope"], "must_mention": ["15"]}
+{"id": "q2", "question": "How does the iSFP bonus work after the July 2026 reform?", "expected_docs": ["beg-em-envelope"], "must_mention": ["5", "30,000"]}
+{"id": "q3", "question": "What is the eligible cost cap for an 8-unit building without a renovation roadmap?", "expected_docs": ["beg-em-envelope"], "must_mention": ["121,000"]}
+{"id": "q4", "question": "Which grant rate does a landlord get for a heat pump under KfW 458?", "expected_docs": ["beg-em-heating"], "must_mention": ["30"]}
+{"id": "q5", "question": "Who can get the climate speed bonus and how high is it?", "expected_docs": ["beg-em-heating"], "must_mention": ["16"]}
+{"id": "q6", "question": "Wie hoch ist der Zuschuss für eine Wärmepumpe?", "expected_docs": ["beg-em-heating"], "must_mention": ["30"]}
+{"id": "q7", "question": "What energy class is a building with 187 kWh per square metre and year?", "expected_docs": ["geg-energy-certificate"], "must_mention": ["F"]}
+{"id": "q8", "question": "What is the difference between a Bedarfsausweis and a Verbrauchsausweis?", "expected_docs": ["geg-energy-certificate"], "must_mention": ["demand", "consumption"]}
+{"id": "q9", "question": "What CO2 factor is used for heating oil?", "expected_docs": ["co2-factors"], "must_mention": ["310"]}
+{"id": "q10", "question": "How much can a landlord raise the rent after an energy modernisation?", "expected_docs": ["landlord-modernisation-levy"], "must_mention": ["8"]}
+{"id": "q11", "question": "Should I insulate first or install the heat pump first?", "expected_docs": ["retrofit-measures"], "must_mention": ["smaller"]}
+{"id": "q12", "question": "Is rooftop solar funded by the BEG grant?", "expected_docs": ["retrofit-measures"], "must_mention": ["270"]}
+{"id": "q13", "question": "What is the maximum loan per dwelling for an Efficiency House renovation?", "expected_docs": ["beg-effizienzhaus"], "must_mention": ["150,000"]}
+{"id": "q14", "question": "What is the weather in Berlin tomorrow?", "expected_docs": [], "must_mention": [], "unanswerable": true}

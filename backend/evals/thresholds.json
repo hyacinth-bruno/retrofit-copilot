@@ -1,0 +1,6 @@
+{
+  "retrieval": {"hit_at_5": 0.85, "mrr": 0.6},
+  "extraction": {"field_accuracy": 0.9, "expected_issue_recall": 1.0},
+  "answers": {"faithfulness_avg": 4.0, "mention_rate": 0.8, "refusal_correct": 1.0},
+  "planning": {"valid_citation_rate": 0.9, "plans_without_errors": 0.9}
+}

@@ -1,0 +1,109 @@
+{
+  "_note": "Demo reference data. Simplified, indicative values (Oct 2026). Funding rules follow the BEG reform in force since 21.07.2026. Verify with BAFA and KfW before any real decision.",
+  "measures": {
+    "facade_insulation": {
+      "label": "Facade insulation (ETICS)",
+      "category": "envelope",
+      "unit": "m² wall",
+      "area_factor": 0.9,
+      "cost_per_unit_eur": [180, 260],
+      "saving_pct": [15, 25]
+    },
+    "roof_insulation": {
+      "label": "Pitched roof insulation",
+      "category": "envelope",
+      "unit": "m² roof",
+      "area_factor": 0.35,
+      "cost_per_unit_eur": [200, 320],
+      "saving_pct": [8, 15]
+    },
+    "top_floor_ceiling_insulation": {
+      "label": "Top floor ceiling insulation",
+      "category": "envelope",
+      "unit": "m² ceiling",
+      "area_factor": 0.3,
+      "cost_per_unit_eur": [40, 90],
+      "saving_pct": [6, 12]
+    },
+    "basement_ceiling_insulation": {
+      "label": "Basement ceiling insulation",
+      "category": "envelope",
+      "unit": "m² ceiling",
+      "area_factor": 0.3,
+      "cost_per_unit_eur": [40, 80],
+      "saving_pct": [4, 8]
+    },
+    "windows": {
+      "label": "Triple-glazed windows",
+      "category": "envelope",
+      "unit": "m² window",
+      "area_factor": 0.18,
+      "cost_per_unit_eur": [700, 1100],
+      "saving_pct": [8, 15]
+    },
+    "ventilation_heat_recovery": {
+      "label": "Ventilation with heat recovery",
+      "category": "plant",
+      "unit": "dwelling unit",
+      "cost_per_dwelling_eur": [6000, 9000],
+      "saving_pct": [5, 10]
+    },
+    "heat_pump": {
+      "label": "Air-to-water heat pump",
+      "category": "heating",
+      "unit": "kW",
+      "cost_per_kw_eur": [1800, 2600],
+      "min_cost_eur": 18000,
+      "full_load_hours": 2000,
+      "scop": 3.0,
+      "boiler_efficiency": 0.9,
+      "saving_pct": [0, 0]
+    },
+    "pv": {
+      "label": "Rooftop solar PV",
+      "category": "other",
+      "unit": "kWp",
+      "kwp_per_m2_living": 0.05,
+      "max_kwp": 100,
+      "cost_per_kwp_eur": [1300, 1700],
+      "yield_kwh_per_kwp": 900,
+      "self_consumption_share": 0.3,
+      "saving_pct": [0, 0]
+    }
+  },
+  "subsidies": {
+    "bafa_envelope_and_plant": {
+      "program": "BEG EM (BAFA)",
+      "base_rate": 0.15,
+      "isfp_bonus_rate": 0.05,
+      "caps_without_isfp": {"first_unit": 30000, "units_2_to_6": 15000, "unit_7_plus": 8000},
+      "caps_with_isfp": {"first_unit": 60000, "units_2_to_6": 30000, "unit_7_plus": 15000}
+    },
+    "kfw_heating": {
+      "program": "BEG EM Heizungsförderung (KfW 458)",
+      "base_rate": 0.30,
+      "speed_bonus_rate": 0.16,
+      "max_rate": 0.70,
+      "caps": {"first_unit": 28000, "units_2_to_6": 15000, "unit_7_plus": 8000}
+    },
+    "none": {"program": "No BEG grant (KfW 270 loan possible)"}
+  },
+  "co2_factors_kg_per_kwh": {
+    "gas": 0.24,
+    "oil": 0.31,
+    "district_heating": 0.28,
+    "electric": 0.56,
+    "heat_pump": 0.56,
+    "biomass": 0.02,
+    "other": 0.30,
+    "unknown": 0.30
+  },
+  "energy_classes_kwh_m2a": [
+    ["A+", 30], ["A", 50], ["B", 75], ["C", 100], ["D", 130], ["E", 160], ["F", 200], ["G", 250], ["H", 100000]
+  ],
+  "modernisation_levy": {
+    "annual_rate": 0.08,
+    "cap_eur_m2_month": 3.0,
+    "cap_low_rent_eur_m2_month": 2.0
+  }
+}

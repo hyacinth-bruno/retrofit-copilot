@@ -1,0 +1,6 @@
+.venv
+**/node_modules
+**/.next
+data/telemetry*
+**/__pycache__
+.env
