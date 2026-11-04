@@ -104,26 +104,35 @@ export function Timeline({ steps }: { steps: Step[] }) {
   if (!steps.length) return null;
   return (
     <ol className="timeline">
-      {steps.map((s, i) => (
-        <li key={i}>
-          <span className={`kind ${s.kind}`}>{s.kind}</span>
-          <span>
-            {s.name}
-            {s.status !== "ok" && <span style={{ marginLeft: 6 }}><Tag tone="err">{s.status}</Tag></span>}
-            {Boolean(s.meta?.fallback) && <span style={{ marginLeft: 6 }}><Tag tone="warn">fallback model</Tag></span>}
-            {s.model && <span className="mono muted"> · {s.model}</span>}
-            {Array.isArray(s.meta?.tool_calls) && (s.meta.tool_calls as string[]).length > 0 && (
-              <span className="mono muted"> → {(s.meta.tool_calls as string[]).join(", ")}</span>
-            )}
-            {typeof s.meta?.query === "string" && <span className="mono muted"> “{s.meta.query as string}”</span>}
-          </span>
-          <span className="meta">
-            {s.duration_ms ? `${Math.round(s.duration_ms)} ms` : ""}
-            {s.tokens ? ` · ${s.tokens} tok` : ""}
-            {s.cost_usd ? ` · $${s.cost_usd.toFixed(4)}` : ""}
-          </span>
-        </li>
-      ))}
+      {steps.map((s, i) => {
+        const tools = Array.isArray(s.meta?.tool_calls) ? (s.meta.tool_calls as string[]) : [];
+        const query = typeof s.meta?.query === "string" ? (s.meta.query as string) : null;
+        const meta = [
+          s.duration_ms ? `${Math.round(s.duration_ms)} ms` : null,
+          s.tokens ? `${s.tokens} tok` : null,
+          s.cost_usd ? `$${s.cost_usd.toFixed(4)}` : null,
+        ].filter(Boolean);
+        return (
+          <li key={i}>
+            <span className={`kind ${s.kind}`}>{s.kind}</span>
+            <div className="main">
+              <span className="name">
+                {s.name}
+                {s.status !== "ok" && <Tag tone="err">{s.status}</Tag>}
+                {Boolean(s.meta?.fallback) && <Tag tone="warn">fallback model</Tag>}
+              </span>
+              {s.model && <span className="detail">{s.model}</span>}
+              {tools.length > 0 && <span className="detail">→ {tools.join(", ")}</span>}
+              {query && <span className="detail">“{query}”</span>}
+            </div>
+            <span className="meta">
+              {meta.map((m) => (
+                <span key={m as string}>{m}</span>
+              ))}
+            </span>
+          </li>
+        );
+      })}
     </ol>
   );
 }
