@@ -9,6 +9,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -377,7 +378,8 @@ function PlanView({ plan }: { plan: Plan }) {
         </div>
       </Stack>
 
-      <TableContainer>
+      {/* Wide screens: table. Phones get the card list below instead. */}
+      <TableContainer sx={{ display: { xs: "none", sm: "block" } }}>
         <Table size="small">
           <TableHead>
             <TableRow>
@@ -399,7 +401,7 @@ function PlanView({ plan }: { plan: Plan }) {
                   <Typography variant="body2" color="text.secondary">
                     {m.rationale}
                   </Typography>
-                  <Typography className="mono" color="text.secondary" sx={{ mt: 0.5 }}>
+                  <Typography className="mono" color="text.secondary" sx={{ mt: 0.5, overflowWrap: "anywhere" }}>
                     {m.subsidy_program}
                     {m.citation_ids.map((c) => ` [${c}]`)}
                   </Typography>
@@ -421,6 +423,54 @@ function PlanView({ plan }: { plan: Plan }) {
           </TableBody>
         </Table>
       </TableContainer>
+      <Stack spacing={1.25} sx={{ display: { xs: "flex", sm: "none" }, p: 0, m: 0 }} component="ol" aria-label="Measures">
+        {plan.measures.map((m) => (
+          <Box
+            component="li"
+            key={m.measure_id}
+            sx={{ listStyle: "none", p: 1.75, borderRadius: 3, border: 1, borderColor: "divider", background: "rgba(3,18,28,0.35)", display: "flex", flexDirection: "column", gap: 1 }}
+          >
+            <Stack direction="row" spacing={1} sx={{ alignItems: "baseline" }}>
+              <Typography className="mono" sx={{ color: "primary.main", fontSize: 13 }}>
+                {m.priority}
+              </Typography>
+              <Typography sx={{ fontWeight: 600, fontSize: 15, lineHeight: 1.3 }}>{m.label}</Typography>
+            </Stack>
+            <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 1 }}>
+              <Box>
+                <Typography variant="overline" color="text.secondary" sx={{ fontSize: 9.5, display: "block", lineHeight: 1.4 }}>
+                  Cost
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: 14, fontVariantNumeric: "tabular-nums" }}>{eur(m.cost_eur)}</Typography>
+                <Typography color="text.secondary" sx={{ fontSize: 11, fontVariantNumeric: "tabular-nums" }}>
+                  {eur(m.cost_eur_low)}–{eur(m.cost_eur_high)}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="overline" color="text.secondary" sx={{ fontSize: 9.5, display: "block", lineHeight: 1.4 }}>
+                  Grant
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: 14, color: "success.main", fontVariantNumeric: "tabular-nums" }}>{eur(m.subsidy_eur)}</Typography>
+              </Box>
+              <Box>
+                <Typography variant="overline" color="text.secondary" sx={{ fontSize: 9.5, display: "block", lineHeight: 1.4 }}>
+                  Saving
+                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: 14 }}>
+                  {m.saving_pct ? `${m.saving_pct}%` : m.measure_id === "pv" ? "solar" : "fuel switch"}
+                </Typography>
+              </Box>
+            </Box>
+            <Typography variant="body2" color="text.secondary">
+              {m.rationale}
+            </Typography>
+            <Typography className="mono" color="text.secondary" sx={{ fontSize: 11, overflowWrap: "anywhere" }}>
+              {m.subsidy_program}
+              {m.citation_ids.map((c) => ` [${c}]`)}
+            </Typography>
+          </Box>
+        ))}
+      </Stack>
 
       <Stack spacing={1}>
         <Section title={`Guardrails (${plan.issues.length})`} defaultExpanded={plan.issues.length > 0}>

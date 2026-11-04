@@ -57,6 +57,12 @@ body {
 .fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
 @media (max-width: 560px) { .fields { grid-template-columns: minmax(0, 1fr); } }
 .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+@media (max-width: 600px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .shell { padding-top: 20px; }
+  .energy-scale { gap: 3px; }
+  .energy-scale div { font-size: 11px; }
+}
 .mono { font-family: var(--mono); font-size: 12px; }
 .muted { color: var(--muted); }
 .gradient-text {

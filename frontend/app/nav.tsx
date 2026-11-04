@@ -73,9 +73,12 @@ export default function Nav() {
           {health && (
             <>
               <Tag tone={health.llm_enabled ? "ok" : "warn"}>{health.llm_enabled ? health.primary_model : "no API key: fallbacks only"}</Tag>
-              <Tag>qdrant {health.qdrant_mode}</Tag>
-              <Tag>{health.embeddings}</Tag>
-              <Tag>kb {health.kb_chunks}</Tag>
+              {/* Secondary status chips are hidden on phones to save space */}
+              <Box component="span" sx={{ display: { xs: "none", sm: "contents" } }}>
+                <Tag>qdrant {health.qdrant_mode}</Tag>
+                <Tag>{health.embeddings}</Tag>
+                <Tag>kb {health.kb_chunks}</Tag>
+              </Box>
             </>
           )}
         </Stack>
