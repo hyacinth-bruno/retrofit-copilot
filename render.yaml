@@ -1,0 +1,31 @@
+# Render Blueprint for the API. In Render: New > Blueprint > pick this repo.
+services:
+  - type: web
+    name: retrofit-copilot-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    plan: starter            # free also works, but sleeps after 15 min idle
+    region: frankfurt
+    healthCheckPath: /health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false          # you enter it in the Render dashboard
+      - key: CORS_ORIGINS
+        sync: false          # e.g. https://retrofit-copilot.vercel.app
+      - key: PRIMARY_MODEL
+        value: claude-sonnet-5-5
+      - key: FALLBACK_MODEL
+        value: claude-haiku-5-5
+      - key: MAX_RUN_COST_USD
+        value: "0.30"
+      # 512 MB plans cannot hold the multilingual embedding model; hash keeps it running.
+      # On a 2 GB plan (standard) change this to fastembed.
+      - key: EMBEDDING_BACKEND
+        value: hash
+      - key: LANGSMITH_TRACING
+        value: "false"
+      - key: LANGSMITH_API_KEY
+        sync: false
+      - key: LANGSMITH_PROJECT
+        value: retrofit-copilot
