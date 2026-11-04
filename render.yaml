@@ -5,7 +5,7 @@ services:
     runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: .
-    plan: starter            # free also works, but sleeps after 15 min idle
+    plan: free               # no card needed; sleeps after 15 min idle (starter is paid)
     region: frankfurt
     healthCheckPath: /health
     envVars:
